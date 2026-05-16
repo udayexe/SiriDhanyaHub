@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.siridhanya.hub.data.entities.MilletType
 import com.siridhanya.hub.data.entities.Recipe
 import com.siridhanya.hub.databinding.FragmentRecipeDetailBinding
 import com.siridhanya.hub.viewmodel.RecipeViewModel
@@ -23,10 +24,14 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        @Suppress("DEPRECATION")
-        recipe = arguments?.getParcelable("recipe")
+        recipe = if (android.os.Build.VERSION.SDK_INT >= 33) {
+            arguments?.getParcelable("recipe", Recipe::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable("recipe")
+        }
         recipe?.let { r ->
-            val milletEnum = try { com.siridhanya.hub.data.entities.MilletType.valueOf(r.milletType) } catch(e: Exception) { null }
+            val milletEnum = try { MilletType.valueOf(r.milletType) } catch(e: Exception) { null }
             b.tvRecipeName.text    = r.name
             b.tvKannadaName.text   = r.kannadaName
             b.tvDescription.text   = r.description

@@ -26,6 +26,7 @@ class SiriDhanyaRepository @Inject constructor(
     fun getPricesForCity(city: String)                 = mandiDao.getPricesForCity(city)
     fun getPricesForMillet(type: String)               = mandiDao.getPricesForMillet(type)
     fun getAllCities(): Flow<List<String>>              = mandiDao.getAllCities()
+    suspend fun updatePrices(prices: List<MandiPrice>) = mandiDao.insertAll(prices)
 
     // ── RECIPES ───────────────────────────────────────────────────────────
     fun getAllRecipes(): Flow<List<Recipe>>             = recipeDao.getAllRecipes()

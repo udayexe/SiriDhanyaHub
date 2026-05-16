@@ -2,6 +2,7 @@ package com.siridhanya.hub.ui.recipes
 
 import android.view.*
 import androidx.recyclerview.widget.*
+import com.siridhanya.hub.data.entities.MilletType
 import com.siridhanya.hub.data.entities.Recipe
 import com.siridhanya.hub.databinding.ItemRecipeCardBinding
 
@@ -17,7 +18,7 @@ class RecipeAdapter(
     }
     inner class VH(private val b: ItemRecipeCardBinding) : RecyclerView.ViewHolder(b.root) {
         fun bind(r: Recipe) {
-            val milletEnum = try { com.siridhanya.hub.data.entities.MilletType.valueOf(r.milletType) } catch (e: Exception) { null }
+            val milletEnum = try { MilletType.valueOf(r.milletType) } catch (e: Exception) { null }
             b.tvRecipeName.text    = r.name
             b.tvKannadaName.text   = r.kannadaName
             b.tvMilletTag.text     = "${milletEnum?.emoji ?: "🌾"} ${milletEnum?.displayName ?: r.milletType}"

@@ -17,6 +17,14 @@ data class MandiPrice(
     @ColumnInfo(name = "last_updated")  val lastUpdated: String,
     @ColumnInfo(name = "market_name")   val marketName: String = ""
 ) : Parcelable {
-    fun trendEmoji() = when(trend) { "UP" -> "📈" "DOWN" -> "📉" else -> "➡️" }
-    fun trendColor() = when(trend) { "UP" -> "#2E7D32" "DOWN" -> "#C62828" else -> "#E65100" }
+    fun trendEmoji() = when(trend) {
+        "UP" -> "📈"
+        "DOWN" -> "📉"
+        else -> "➡️"
+    }
+    fun trendColor() = when(trend) {
+        "UP" -> "#2E7D32"
+        "DOWN" -> "#C62828"
+        else -> "#E65100"
+    }
 }

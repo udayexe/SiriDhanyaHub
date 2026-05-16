@@ -26,14 +26,17 @@ class MandiViewModel @Inject constructor(private val repo: SiriDhanyaRepository)
         viewModelScope.launch {
             // Simulate price refresh with slight random variation
             val current = prices.value
-            current.forEach { price ->
+            val updated = current.map { price ->
                 val variation = (-2..2).random().toDouble()
                 val newPrice  = (price.pricePerKg + variation).coerceAtLeast(10.0)
                 val newTrend  = when {
-                    variation > 0 -> "UP"; variation < 0 -> "DOWN"; else -> "STABLE"
+                    variation > 0 -> "UP"
+                    variation < 0 -> "DOWN"
+                    else -> "STABLE"
                 }
-                repo.getAllPrices() // triggers recomposition
+                price.copy(pricePerKg = newPrice, trend = newTrend)
             }
+            repo.updatePrices(updated)
         }
     }
 }
